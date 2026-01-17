@@ -17,11 +17,13 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "6.0.x"
+      - name: Setup References
+        run: dotnet restore & curl -o 'ref.tar.gz' ${{ secrets.REFERENCESDOWNLOADURL }}
       - run: |
-          dotnet restore & curl -o 'ref.tar.gz' "${{ secrets.ReferencesDownloadUrl }}" & wait;
           tar -xzf ref.tar.gz
           mv ref .ref # the file server hosting the references wont include dotfiles 3:
-      - run: dotnet build --configuration ${{ inputs.configuration }} --output .build
+      - name: Build RumbleAnimator
+        run: dotnet build --configuration ${{ inputs.configuration }} --output .build
       - uses: actions/upload-artifact@v4
         with:
           name: RumbleAnimator-${{ inputs.configuration }}

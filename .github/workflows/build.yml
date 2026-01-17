@@ -18,7 +18,7 @@ jobs:
         with:
           dotnet-version: "6.0.x"
       - run: |
-          dotnet restore & curl -o 'ref.tar.gz' "${{ secrets.ReferencesDownloadUrl }}" & wait;
+          dotnet restore & curl -o 'ref.tar.gz' "${{ secrets.REFERENCESDOWNLOADURL }}" & wait;
           tar -xzf ref.tar.gz
           mv ref .ref # the file server hosting the references wont include dotfiles 3:
       - run: dotnet build --configuration ${{ inputs.configuration }} --output .build
